@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RESPONSIVE LANDING PAGE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .navbar.scrolled {
+            background: rgba(15, 15, 35, 0.98);
+            padding: 0.7rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #8b5cf6;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            color: #a78bfa;
+            transform: scale(1.05);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .nav-link:hover::before {
+            left: 100%;
+        }
+
+        .nav-link:hover {
+            color: #8b5cf6;
+            background: rgba(139, 92, 246, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 80%;
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #e2e8f0;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 3px;
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 6rem 2rem 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            min-height: 100vh;
+            margin-top: -80px;
+            padding-top: 80px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #1a1a2e;
+            text-align: center;
+        }
+
+        .section-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #4a5568;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background: rgba(15, 15, 35, 0.98);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0, 0, 0, 0.3);
+                padding: 2rem 0;
+                gap: 1rem;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+            z-index: 1001;
+            transition: width 0.1s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-indicator" id="scrollIndicator"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo">LOGO</a>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#services" class="nav-link">Services</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#portfolio" class="nav-link">Portfolio</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contact</a>
+                </li>
+            </ul>
+            <div class="mobile-toggle" id="mobileToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <h1>RESPONSIVE LANDING PAGE</h1>
+        <p>A responsive landing page is a modern, user-friendly web page designed to adapt to different screen sizes, including desktops, tablets, and smartphones. It provides a clean layout with interactive navigation, smooth scrolling, and visually appealing sections like Home, Services, About Us, and Contact. Built using HTML, CSS, and JavaScript, it ensures a consistent experience across all devices.</p>
+    </section>
+
+    <!-- Content Sections -->
+    <section id="about" class="content-section">
+        <h2 class="section-title">About Us</h2>
+        <div class="section-content">
+            <p>A responsive landing page is a single web page that:</p>
+            <br>
+            <p>Adjusts automatically to fit all screen sizes — like mobile phones, tablets, laptops, and desktops.
+
+                Is designed to give users a clear message or purpose, like introducing a product, service, or person.
+                
+                Looks good and works well on any device, without needing zoom or horizontal scrolling.
+                
+            </p>
+        </div>
+    </section>
+
+    <section id="services" class="content-section">
+        <h2 class="section-title">Our Services</h2>
+        <div class="section-content">
+            <p>The Services section highlights what you or your business offers. It's one of the most important parts of a landing page </p>
+            <br>
+            <p>For a Web Developer Portfolio:
+            <br>
+                Web Design – Creating attractive and user-friendly website layouts.<br>
+                
+                Front-End Development – Building responsive websites using HTML, CSS, and JavaScript.<br>
+                
+                Back-End Development – Server-side logic and database handling (Node.js, Python, etc.).<br>
+                
+                UI/UX Design – Designing smooth and intuitive user experiences.<br>
+                
+                SEO Optimization – Improving website visibility on search engines.
+                
+            </p>
+        </div>
+    </section>
+
+    <section id="portfolio" class="content-section">
+        <h2 class="section-title">Portfolio</h2>
+        <div class="section-content">
+            <p>A responsive landing page portfolio is a single web page that showcases your skills, projects, and experience, and is designed to look great on all devices — desktops, tablets, and mobiles. It acts as your digital resume or online identity, especially useful for students, developers, designers, or freelancers.
+
+            </p>
+            <br>
+            <p> 1. Header / Navigation<br>
+                Fixed at the top
+                
+                Contains links: Home, About, Projects, Skills, Contact
+                
+                Responsive design (turns into a hamburger menu on small screens)
+                
+                Scroll and hover effects<br>
+                
+                 2. Hero Section<br>
+                A welcoming title like: “Hi, I’m [Your Name]”
+                
+                Subtitle: “Web Developer | UI/UX Designer | Python Enthusiast”
+                
+                Call-to-action button (e.g., “Hire Me” or “View Resume”)<br>
+                
+                ✅ 3. About Me Section<br>
+                Short paragraph about your background, interests, and goals
+                
+                Maybe a profile picture<br>
+                
+                ✅ 4. Projects / Portfolio<br>
+                Showcase 3–6 key projects with screenshots, titles, and links (like GitHub or live demo)
+                
+                Add short descriptions<br>
+                
+                ✅ 5. Skills Section<br>
+                List your technical skills (HTML, CSS, JavaScript, Python, etc.)
+                
+                Use icons or progress bars (optional)<br>
+                
+                ✅ 6. Contact Section<br>
+                Contact form (Name, Email, Message)
+                
+                Or just list your email and social profiles (LinkedIn, GitHub)<br>
+                
+                ✅ 7. Footer<br>
+                Simple footer with copyright, email, or social links
+                
+                </p><br>
+                <h3>                    Technologies Used
+                    Technology	Role</h3><br>
+<p>HTML	Page structure (headings, sections, links, forms)<br>
+CSS	Styling, layout, responsive design (media queries)<br>
+JavaScript	Scroll effects, interactive menu, form handling<br>
+(Optional) Bootstrap or Tailwind	Faster styling using classes
+                </p>
+                <h3>Benefits of a Responsive Portfolio</h3><br>
+                <p>Looks good on all screen sizes<br>
+
+                     Easy to share with recruiters or clients<br>
+                    
+                     Boosts your online presence<br>
+                    
+                     Helps you stand out<br>
+                    
+                    </p>
+        </div>
+    </section>
+
+    <section id="contact" class="content-section">
+        <h2 class="section-title">Contact</h2>
+        <div class="section-content">
+            <p>The Contact section allows users or visitors to get in touch with you — whether it’s to ask questions, request services, give feedback, or collaborate. It builds trust and creates a connection between you and your audience.</p><br>
+            
+                <form action="#" method="POST" class="contact-form">
+                  <input type="text" placeholder="Your Name" required>
+                  <input type="email" placeholder="Your Email" required>
+                  <textarea placeholder="Your Message" required></textarea>
+                  <button type="submit">Send Message</button>
+                </form>
+              </section>
+              
+        
+        </div>
+    </section>
+
+    <script>
+        // Get DOM elements
+        const navbar = document.getElementById('navbar');
+        const navMenu = document.getElementById('navMenu');
+        const mobileToggle = document.getElementById('mobileToggle');
+        const scrollIndicator = document.getElementById('scrollIndicator');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        // Scroll effect for navbar
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            
+            // Add scrolled class when scrolling
+            if (scrolled > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            // Update scroll progress indicator
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled_percent = (winScroll / height) * 100;
+            scrollIndicator.style.width = scrolled_percent + '%';
+        });
+
+        // Mobile menu toggle
+        mobileToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Smooth scrolling for navigation links
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                
+                if (targetSection) {
+                    const offsetTop = targetSection.offsetTop - 80;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+
+                // Close mobile menu if open
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Enhanced hover effects with sound-like animation
+        navLinks.forEach(link => {
+            link.addEventListener('mouseenter', (e) => {
+                // Add ripple effect
+                const ripple = document.createElement('span');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(139, 92, 246, 0.3)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s linear';
+                ripple.style.left = '50%';
+                ripple.style.top = '50%';
+                ripple.style.width = '100px';
+                ripple.style.height = '100px';
+                ripple.style.marginLeft = '-50px';
+                ripple.style.marginTop = '-50px';
+                ripple.style.pointerEvents = 'none';
+                
+                link.style.position = 'relative';
+                link.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Add ripple animation keyframes
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(2);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            const rate = scrolled * -0.5;
+            hero.style.transform = `translateY(${rate}px)`;
+        });
+
+        // Active navigation highlighting
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const sections = document.querySelectorAll('section');
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Add active link styles
+        const activeStyle = document.createElement('style');
+        activeStyle.textContent = `
+            .nav-link.active {
+                color: #8b5cf6 !important;
+                background: rgba(139, 92, 246, 0.15) !important;
+            }
+            .nav-link.active::after {
+                width: 80% !important;
+            }
+        `;
+        document.head.appendChild(activeStyle);
+    </script>
+</body>
+</html>
